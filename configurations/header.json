@@ -1,0 +1,116 @@
+{
+  "launcher": {
+    "runs": 1,
+    "location": "/tmp/results",
+    "jar": "/home/xp/apps/MLlib-XP/experiment/target/scala-2.11/LACAN-assembly-0.1.jar",
+    "mainclass": "fr.insa.lacan.Main",
+    "results": "hdfs://master:9000/",
+    "timeout": 12000
+  },
+  "collector": {
+    "start": "/home/xp/apps/MLlib-XP/deployment/start_collecting.sh",
+    "stop": "/home/xp/apps/MLlib-XP/deployment/stop_collecting.sh",
+    "script": "/home/xp/collect.proc.sh",
+    "workers": "/home/xp/workers"
+  },
+  "platforms": {
+    "spark.master": {
+      "default": "spark://master:7077"
+    },
+    "spark.executor.memory": {
+      "default": "5g",
+      "values": ["2g", "10g", "15g", "20g", "25g", "30g", "50g", "70g", "100g"]
+    },
+    "spark.executor.cores": {
+      "default": "4",
+      "values": ["1", "2", "3", "5", "6", "7", "8", "9", "10"]
+    },
+    "spark.shuffle.file.buffer": {
+      "default": "32k",
+      "values": ["4k", "8k", "16k", "48k", "64k", "128k", "192k", "256k", "512k"]
+    },
+    "spark.reducer.maxSizeInFlight": {
+      "default": "48m",
+      "values": ["6m", "12m", "24m", "72m", "96m", "128m", "192m", "256m", "512m"]
+    },
+    "spark.storage.memoryFraction": {
+      "default": "0.6",
+      "values": ["0.05", "0.1", "0.2", "0.3", "0.4", "0.5", "0.7", "0.8", "0.9"]
+    },
+    "spark.locality.wait": {
+      "default": "3s",
+      "values": ["1ms", "10ms", "50ms", "100ms", "500ms", "1s", "2s", "5s", "10s"]
+    },
+    "spark.shuffle.spill.compress": {
+      "default": "true",
+      "values": ["false"]
+    },
+    "spark.shuffle.io.preferDirectBufs": {
+      "default": "true",
+      "values": ["false"]
+    },
+    "spark.rdd.compress": {
+      "default": "false",
+      "values": ["true"]
+    },
+    "spark.io.compression.codec": {
+      "default": "snappy",
+      "values": ["lz4"]
+    },
+    "spark.shuffle.compress": {
+      "default": "true",
+      "values": ["false"]
+    },
+    "spark.serializer": {
+      "default": "org.apache.spark.serializer.JavaSerializer",
+      "values": ["org.apache.spark.serializer.KryoSerializer"]
+    }
+  },
+  "execution": {
+    "storage": "MEMORY_AND_DISK",
+    "lazily": true
+  },
+  "metrics": {
+    "applicative": {
+      "writer": {
+        "classname": "fr.insa.lacan.writer.SparkWriter",
+        "parameters": {
+          "location": "hdfs://master:9000/applicative-metrics.csv",
+          "format": "csv",
+          "coalesce": 1,
+          "mode": "overwrite",
+          "options": {
+            "header": true
+          }
+        }
+      }
+    },
+    "platform": {
+      "level": "task",
+      "fit": {
+        "classname": "fr.insa.lacan.writer.SparkWriter",
+        "parameters": {
+          "location": "hdfs://master:9000/platform-fit-metrics.csv",
+          "format": "csv",
+          "coalesce": 1,
+          "mode": "overwrite",
+          "options": {
+            "header": true
+          }
+        }
+      },
+      "transform": {
+        "classname": "fr.insa.lacan.writer.SparkWriter",
+        "parameters": {
+          "location": "hdfs://master:9000/platform-transform-metrics.csv",
+          "format": "csv",
+          "coalesce": 1,
+          "mode": "overwrite",
+          "options": {
+            "header": true
+          }
+        }
+      }
+    }
+  }
+}

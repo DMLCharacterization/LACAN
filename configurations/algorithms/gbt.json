@@ -1,0 +1,17 @@
+{
+  "name": "GBT",
+  "types": ["regression"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.regression.GBTRegressor",
+        "parameters": {
+          "labelCol": "y",
+          "maxDepth": 10,
+          "maxIter": 10
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

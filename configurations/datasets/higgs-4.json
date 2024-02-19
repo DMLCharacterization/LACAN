@@ -1,0 +1,57 @@
+{
+  "name": "higgs-4",
+  "types": ["classification", "clustering", "regression"],
+  "description": {
+    "clusters": 2,
+    "classes": 2,
+    "features": 27
+  },
+  "details": {
+    "reader": {
+      "classname": "fr.insa.lacan.reader.SparkReader",
+      "parameters": {
+        "format": "csv",
+        "location": "hdfs://master:9000/data/higgs-4.csv",
+        "options": {
+          "sep": ",",
+          "inferSchema": true,
+          "header": true
+        }
+      }
+    },
+    "transformers": [
+      {
+        "classname": "org.apache.spark.ml.feature.VectorAssembler",
+        "parameters": {
+          "inputCols": ["lepton_eta", "lepton_phi", "missing_energy_magnitude", "missing_energy_phi", "jet_1_pt", "jet_1_eta", "jet_1_phi", "jet_1_b-tag", "jet_2_pt", "jet_2_eta", "jet_2_phi", "jet_2_b-tag", "jet_3_pt", "jet_3_eta", "jet_3_phi", "jet_3_b-tag", "jet_4_pt", "jet_4_eta", "jet_4_phi", "jet_4_b-tag", "m_jj", "m_jjj", "m_lv", "m_jlv", "m_bb", "m_wbb", "m_wwbb"],
+          "outputCol": "raw"
+        }
+      }
+    ],
+    "preprocessors": [
+      {
+        "classname": "org.apache.spark.ml.feature.StandardScaler",
+        "parameters": {
+          "inputCol": "raw",
+          "outputCol": "features",
+          "withStd": true,
+          "withMean": true
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "label",
+          "newName": "classes"
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "lepton_pT",
+          "newName": "y"
+        }
+      }
+    ]
+  }
+}

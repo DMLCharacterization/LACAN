@@ -1,0 +1,15 @@
+{
+  "name": "Logistic",
+  "types": ["classification"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.classification.LogisticRegression",
+        "parameters": {
+          "labelCol": "classes"
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

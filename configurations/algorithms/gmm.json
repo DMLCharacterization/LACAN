@@ -1,0 +1,15 @@
+{
+  "name": "GMM",
+  "types": ["clustering"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.clustering.GaussianMixture",
+        "parameters": {
+          "k": "${dataset.clusters}"
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

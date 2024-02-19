@@ -1,0 +1,16 @@
+{
+  "name": "Tree",
+  "types": ["classification"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.classification.DecisionTreeClassifier",
+        "parameters": {
+          "labelCol": "classes",
+          "maxDepth": 10
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

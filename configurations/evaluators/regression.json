@@ -1,0 +1,37 @@
+{
+  "name": "regression",
+  "types": ["regression"],
+  "details": {
+    "postprocessors": [],
+    "evaluators": {
+      "rmse": {
+        "classname": "org.apache.spark.ml.evaluation.RegressionEvaluator",
+        "parameters": {
+          "labelCol": "y",
+          "metricName": "rmse"
+        }
+      },
+      "mse": {
+        "classname": "org.apache.spark.ml.evaluation.RegressionEvaluator",
+        "parameters": {
+          "labelCol": "y",
+          "metricName": "mse"
+        }
+      },
+      "mae": {
+        "classname": "org.apache.spark.ml.evaluation.RegressionEvaluator",
+        "parameters": {
+          "labelCol": "y",
+          "metricName": "mae"
+        }
+      },
+      "r2": {
+        "classname": "org.apache.spark.ml.evaluation.RegressionEvaluator",
+        "parameters": {
+          "labelCol": "y",
+          "metricName": "r2"
+        }
+      }
+    }
+  }
+}

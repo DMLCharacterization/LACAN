@@ -1,0 +1,65 @@
+{
+  "name": "drift-3",
+  "types": ["classification", "clustering", "regression"],
+  "description": {
+    "clusters": 6,
+    "classes": 6,
+    "features": 128
+  },
+  "details": {
+    "reader": {
+      "classname": "fr.insa.lacan.reader.SparkReader",
+      "parameters": {
+        "format": "csv",
+        "location": "hdfs://master:9000/data/drift-3.csv",
+        "options": {
+          "sep": ",",
+          "inferSchema": true,
+          "header": true
+        }
+      }
+    },
+    "transformers": [
+      {
+        "classname": "org.apache.spark.ml.feature.StringIndexer",
+        "parameters": {
+          "inputCol": "gaz",
+          "outputCol": "gazIndexed",
+          "handleInvalid": "skip"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.VectorAssembler",
+        "parameters": {
+          "inputCols": ["DR_1", "|DR|_1", "EMAi0001_1", "EMAi001_1", "EMAi01_1", "EMAd0001_1", "EMAd001_1", "EMAd01_1", "DR_2", "|DR|_2", "EMAi0001_2", "EMAi001_2", "EMAi01_2", "EMAd0001_2", "EMAd001_2", "EMAd01_2", "DR_3", "|DR|_3", "EMAi0001_3", "EMAi001_3", "EMAi01_3", "EMAd0001_3", "EMAd001_3", "EMAd01_3", "DR_4", "|DR|_4", "EMAi0001_4", "EMAi001_4", "EMAi01_4", "EMAd0001_4", "EMAd001_4", "EMAd01_4", "DR_5", "|DR|_5", "EMAi0001_5", "EMAi001_5", "EMAi01_5", "EMAd0001_5", "EMAd001_5", "EMAd01_5", "DR_6", "|DR|_6", "EMAi0001_6", "EMAi001_6", "EMAi01_6", "EMAd0001_6", "EMAd001_6", "EMAd01_6", "DR_7", "|DR|_7", "EMAi0001_7", "EMAi001_7", "EMAi01_7", "EMAd0001_7", "EMAd001_7", "EMAd01_7", "DR_8", "|DR|_8", "EMAi0001_8", "EMAi001_8", "EMAi01_8", "EMAd0001_8", "EMAd001_8", "EMAd01_8", "DR_9", "|DR|_9", "EMAi0001_9", "EMAi001_9", "EMAi01_9", "EMAd0001_9", "EMAd001_9", "EMAd01_9", "DR_10", "|DR|_10", "EMAi0001_10", "EMAi001_10", "EMAi01_10", "EMAd0001_10", "EMAd001_10", "EMAd01_10", "DR_11", "|DR|_11", "EMAi0001_11", "EMAi001_11", "EMAi01_11", "EMAd0001_11", "EMAd001_11", "EMAd01_11", "DR_12", "|DR|_12", "EMAi0001_12", "EMAi001_12", "EMAi01_12", "EMAd0001_12", "EMAd001_12", "EMAd01_12", "DR_13", "|DR|_13", "EMAi0001_13", "EMAi001_13", "EMAi01_13", "EMAd0001_13", "EMAd001_13", "EMAd01_13", "DR_14", "|DR|_14", "EMAi0001_14", "EMAi001_14", "EMAi01_14", "EMAd0001_14", "EMAd001_14", "EMAd01_14", "DR_15", "|DR|_15", "EMAi0001_15", "EMAi001_15", "EMAi01_15", "EMAd0001_15", "EMAd001_15", "EMAd01_15", "DR_16", "|DR|_16", "EMAi0001_16", "EMAi001_16", "EMAi01_16", "EMAd0001_16", "EMAd001_16", "EMAd01_16"],
+          "outputCol": "raw"
+        }
+      }
+    ],
+    "preprocessors": [
+      {
+        "classname": "org.apache.spark.ml.feature.StandardScaler",
+        "parameters": {
+          "inputCol": "raw",
+          "outputCol": "features",
+          "withStd": true,
+          "withMean": true
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "gazIndexed",
+          "newName": "classes"
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "ppm",
+          "newName": "y"
+        }
+      }
+    ]
+  }
+}

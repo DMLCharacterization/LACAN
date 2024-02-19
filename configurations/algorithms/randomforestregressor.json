@@ -1,0 +1,16 @@
+{
+  "name": "RFR",
+  "types": ["regression"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.regression.RandomForestRegressor",
+        "parameters": {
+          "labelCol": "y",
+          "maxDepth": 10
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Linear",
+  "types": ["regression"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.regression.LinearRegression",
+        "parameters": {
+          "labelCol": "y"
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

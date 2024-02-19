@@ -1,0 +1,16 @@
+{
+  "name": "clustering",
+  "types": ["clustering"],
+  "details": {
+    "postprocessors": [],
+    "evaluators": {
+      "silhouette": {
+        "classname": "org.apache.spark.ml.evaluation.ClusteringEvaluator",
+        "parameters": {
+          "metricName": "silhouette"
+        }
+      }
+
+    }
+  }
+}

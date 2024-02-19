@@ -1,0 +1,15 @@
+{
+  "name": "KMeans",
+  "types": ["clustering"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.clustering.KMeans",
+        "parameters": {
+          "k": "${dataset.clusters}"
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

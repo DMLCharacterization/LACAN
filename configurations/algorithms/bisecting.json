@@ -1,0 +1,15 @@
+{
+  "name": "BisectingKMeans",
+  "types": ["clustering"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.clustering.BisectingKMeans",
+        "parameters": {
+          "k": "${dataset.clusters}"
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

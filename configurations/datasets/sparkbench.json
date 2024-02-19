@@ -1,0 +1,65 @@
+{
+  "name": "sparkbench",
+  "types": ["classification", "clustering", "regression"],
+  "description": {
+    "clusters": 2,
+    "classes": 2,
+    "features": 28
+  },
+  "details": {
+    "reader": {
+      "classname": "fr.insa.lacan.reader.SparkReader",
+      "parameters": {
+        "format": "csv",
+        "location": "hdfs://master:9000/data/sparkbench.csv",
+        "options": {
+          "sep": ",",
+          "inferSchema": true,
+          "header": true
+        }
+      }
+    },
+    "transformers": [
+      {
+        "classname": "org.apache.spark.ml.feature.Binarizer",
+        "parameters": {
+          "inputCol": "c1",
+          "outputCol": "c1_binarized",
+          "threshold": 0.5
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.VectorAssembler",
+        "parameters": {
+          "inputCols": ["c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21", "c22", "c23", "c24", "c25", "c26", "c27"],
+          "outputCol": "raw"
+        }
+      }
+    ],
+    "preprocessors": [
+      {
+        "classname": "org.apache.spark.ml.feature.StandardScaler",
+        "parameters": {
+          "inputCol": "raw",
+          "outputCol": "features",
+          "withStd": true,
+          "withMean": true
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "c0",
+          "newName": "classes"
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "c1_binarized",
+          "newName": "y"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "classification",
+  "types": ["classification"],
+  "details": {
+    "postprocessors": [],
+    "evaluators": {
+      "f1": {
+        "classname": "org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator",
+        "parameters": {
+          "labelCol": "classes",
+          "metricName": "f1"
+        }
+      },
+      "accuracy": {
+        "classname": "org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator",
+        "parameters": {
+          "labelCol": "classes",
+          "metricName": "accuracy"
+        }
+      },
+      "weightedPrecision": {
+        "classname": "org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator",
+        "parameters": {
+          "labelCol": "classes",
+          "metricName": "weightedPrecision"
+        }
+      },
+      "weightedRecall": {
+        "classname": "org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator",
+        "parameters": {
+          "labelCol": "classes",
+          "metricName": "weightedRecall"
+        }
+      }
+    }
+  }
+}

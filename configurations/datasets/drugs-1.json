@@ -1,0 +1,111 @@
+{
+  "name": "drugs-1",
+  "types": ["classification", "clustering", "regression"],
+  "description": {
+    "clusters": 10,
+    "classes": 10,
+    "features": 203
+  },
+  "details": {
+    "reader": {
+      "classname": "fr.insa.lacan.reader.SparkReader",
+      "parameters": {
+        "format": "csv",
+        "location": "hdfs://master:9000/data/drugs-1.csv",
+        "options": {
+          "sep": ",",
+          "inferSchema": true,
+          "header": true,
+          "quote": "#"
+        }
+      }
+    },
+    "transformers": [
+      {
+        "classname": "org.apache.spark.ml.feature.StringIndexer",
+        "parameters": {
+          "inputCol": "drugName",
+          "outputCol": "drugNameIndexed",
+          "handleInvalid": "skip"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.StringIndexer",
+        "parameters": {
+          "inputCol": "condition",
+          "outputCol": "conditionIndexed",
+          "handleInvalid": "skip"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.StringIndexer",
+        "parameters": {
+          "inputCol": "rating",
+          "outputCol": "ratingIndexed",
+          "handleInvalid": "skip"
+        }
+      }
+    ],
+    "preprocessors": [
+      {
+        "classname": "org.apache.spark.ml.feature.Tokenizer",
+        "parameters": {
+          "inputCol": "review",
+          "outputCol": "words"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.StopWordsRemover",
+        "parameters": {
+          "inputCol": "words",
+          "outputCol": "filtered"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.HashingTF",
+        "parameters": {
+          "inputCol": "filtered",
+          "outputCol": "hashing",
+          "numFeatures": 200
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.IDF",
+        "parameters": {
+          "inputCol": "hashing",
+          "outputCol": "frequencies"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.VectorAssembler",
+        "parameters": {
+          "inputCols": ["drugNameIndexed", "conditionIndexed", "usefulCount", "frequencies"],
+          "outputCol": "raw"
+        }
+      },
+      {
+        "classname": "org.apache.spark.ml.feature.StandardScaler",
+        "parameters": {
+          "inputCol": "raw",
+          "outputCol": "features",
+          "withStd": true,
+          "withMean": true
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "rating",
+          "newName": "y"
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "ratingIndexed",
+          "newName": "classes"
+        }
+      }
+    ]
+  }
+}

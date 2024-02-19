@@ -1,0 +1,57 @@
+{
+  "name": "geomagnetic-2",
+  "types": ["classification", "clustering", "regression"],
+  "description": {
+    "clusters": 2,
+    "classes": 2,
+    "features": 11
+  },
+  "details": {
+    "reader": {
+      "classname": "fr.insa.lacan.reader.SparkReader",
+      "parameters": {
+        "format": "csv",
+        "location": "hdfs://master:9000/data/geomagnetic-2.csv",
+        "options": {
+          "sep": ",",
+          "inferSchema": true,
+          "header": true
+        }
+      }
+    },
+    "transformers": [
+      {
+        "classname": "org.apache.spark.ml.feature.VectorAssembler",
+        "parameters": {
+          "inputCols": ["AccelerationX", "AccelerationY", "AccelerationZ", "MagneticFieldX", "MagneticFieldY", "MagneticFieldZ", "Z-AxisAgle(Azimuth)", "X-AxisAngle(Pitch)", "Y-AxisAngle(Roll)", "GyroX", "GyroY"],
+          "outputCol": "raw"
+        }
+      }
+    ],
+    "preprocessors": [
+      {
+        "classname": "org.apache.spark.ml.feature.StandardScaler",
+        "parameters": {
+          "inputCol": "raw",
+          "outputCol": "features",
+          "withStd": true,
+          "withMean": true
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "device",
+          "newName": "classes"
+        }
+      },
+      {
+        "classname": "fr.insa.lacan.transformer.ColumnRenamer",
+        "parameters": {
+          "existingName": "GyroZ",
+          "newName": "y"
+        }
+      }
+    ]
+  }
+}

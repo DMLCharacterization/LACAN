@@ -1,0 +1,18 @@
+{
+  "name": "MLP",
+  "types": ["classification"],
+  "details": {
+    "estimators": [
+      {
+        "classname": "org.apache.spark.ml.classification.MultilayerPerceptronClassifier",
+        "parameters": {
+          "labelCol": "classes",
+          "layers": ["${dataset.features}", 100, "${dataset.classes}"],
+          "stepSize": 0.001,
+          "maxIter": 100
+        }
+      }
+    ],
+    "postprocessors": []
+  }
+}

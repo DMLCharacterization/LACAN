@@ -1,0 +1,12 @@
+spark.io.compression.codec,100,0
+spark.executor.cores,1,2,3,4,5,6,7,8,9,0
+spark.reducer.maxSizeInFlight,28,29,30,31,32,33,34,35,36,0
+spark.serializer,110,0
+spark.shuffle.io.preferDirectBufs,120,0
+spark.shuffle.spill.compress,220,0
+spark.shuffle.compress,210,0
+spark.locality.wait,19,20,21,22,23,24,25,26,27,0
+spark.rdd.compress,200,0
+spark.shuffle.file.buffer,37,38,39,40,41,42,43,44,45,0
+spark.executor.memory,10,11,12,13,14,15,16,17,18,0
+spark.storage.memoryFraction,46,47,48,49,50,51,52,53,54,0

@@ -1,0 +1,13 @@
+{
+  "name": "random-80-20",
+  "types": ["classification", "regression"],
+  "details": {
+    "splitter": {
+      "classname": "fr.insa.lacan.splitter.RandomSplitter",
+      "parameters": {
+        "weights": [0.8, 0.2],
+        "seed": 42
+      }
+    }
+  }
+}
